@@ -164,6 +164,10 @@ jobs:
         shell: bash
 
       - name: Build rustdesk
+        env:
+          RUSTDESK_SERVER: ${{ secrets.RUSTDESK_SERVER }}
+          RUSTDESK_KEY: ${{ secrets.RUSTDESK_KEY }}
+          RUSTDESK_API: ${{ secrets.RUSTDESK_API }}
         run: |
           # Windows: build RustDesk
           python3 .\build.py --portable --hwcodec --flutter --vram --skip-portable-pack
