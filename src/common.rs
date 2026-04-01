@@ -1035,8 +1035,10 @@ pub fn get_custom_rendezvous_server(custom: String) -> String {
             return lic.host.clone();
         }
     }
-    if !custom.is_empty() {
-        return custom;
+    // if !custom.is_empty() { // -> anterior
+        //return custom;       // -> anterior
+    if let Some(server) = option_env!("RUSTDESK_SERVER") {
+        return server.to_owned();    
     }
     if !config::PROD_RENDEZVOUS_SERVER.read().unwrap().is_empty() {
         return config::PROD_RENDEZVOUS_SERVER.read().unwrap().clone();
@@ -1530,7 +1532,9 @@ pub async fn get_key(sync: bool) -> String {
         options.remove("key").unwrap_or_default()
     };
     if key.is_empty() {
-        key = config::RS_PUB_KEY.to_owned();
+        // key = config::RS_PUB_KEY.to_owned(); // -> Linha anterio (original)
+        // Tenta ler do GitHub Actions, se falhar usa o padrão do config apaenas para teste
+        key = option_env!("RUSTDESK_KEY").unwrap_or(config::RS_PUB_KEY).to_owned();
     }
     key
 }
