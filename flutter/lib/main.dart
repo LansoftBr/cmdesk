@@ -128,6 +128,19 @@ Future<void> initEnv(String appType) async {
   _registerEventHandler();
   // Update the system theme.
   updateSystemWindowTheme();
+
+  const rendezvousServer = String.fromEnvironment('RENDEZVOUS_SERVER');
+  if (rendezvousServer.isNotEmpty) {
+    await bind.mainSetOption(key: 'custom-rendezvous-server', value: rendezvousServer);
+  }
+  const apiServer = String.fromEnvironment('API_SERVER');
+  if (apiServer.isNotEmpty) {
+    await bind.mainSetOption(key: 'api-server', value: apiServer);
+  }
+  const key = String.fromEnvironment('KEY');
+  if (key.isNotEmpty) {
+    await bind.mainSetOption(key: 'key', value: key);
+  }
 }
 
 void runMainApp(bool startService) async {
