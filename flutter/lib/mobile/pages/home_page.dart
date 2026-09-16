@@ -47,7 +47,7 @@ class HomePageState extends State<HomePage> {
 
   void initPages() {
     _pages.clear();
-    if (!bind.isIncomingOnly()) {
+    if (false) {
       _pages.add(ConnectionPage(
         appBarActions: [],
       ));
