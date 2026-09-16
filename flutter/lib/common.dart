@@ -2579,6 +2579,10 @@ connect(BuildContext context, String id,
     String? password,
     String? connToken,
     bool? isSharedPassword}) async {
+  if (!gFFI.userModel.isLogin) {
+      showToast("Acesso negado. Faça login no servidor da Casa Magalhães.");
+      return;
+  }
   if (id == '') return;
   if (!isDesktop || desktopType == DesktopType.main) {
     try {
