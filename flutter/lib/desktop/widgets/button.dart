@@ -94,6 +94,7 @@ class FixedWidthButton extends StatefulWidget {
   final Color? textColor;
   final double? radius;
   final Color? borderColor;
+  final Color? bgColor;
   final int? maxLines;
 
   FixedWidthButton({
@@ -106,6 +107,7 @@ class FixedWidthButton extends StatefulWidget {
     this.textColor,
     this.radius,
     this.borderColor,
+    this.bgColor,
     required this.onTap,
     required this.text,
   }) : super(key: key);
@@ -133,7 +135,7 @@ class _FixedWidthButtonState extends State<FixedWidthButton> {
             decoration: BoxDecoration(
               color: pressed.value
                   ? MyTheme.accent
-                  : (widget.isOutline ? Colors.transparent : MyTheme.button),
+                  : (widget.isOutline ? Colors.transparent : (widget.bgColor ?? MyTheme.button)),
               border: Border.all(
                 color: pressed.value
                     ? MyTheme.accent
@@ -141,7 +143,7 @@ class _FixedWidthButtonState extends State<FixedWidthButton> {
                         ? MyTheme.hoverBorder
                         : (widget.isOutline
                             ? widget.borderColor ?? MyTheme.border
-                            : MyTheme.button),
+                            : (widget.bgColor ?? MyTheme.button)),
               ),
               borderRadius: BorderRadius.circular(widget.radius ?? 5),
             ),
