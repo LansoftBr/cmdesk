@@ -18,6 +18,12 @@ Para impedir que o usuário modifique a conexão e desvincule o aplicativo do se
 - **`flutter/lib/desktop/pages/desktop_setting_page.dart`**: Removido o item `SettingsTabKey.network` da lista de guias.
 - **`flutter/lib/mobile/pages/settings_page.dart`**: O valor de `_hideNetwork` foi forçado (hardcoded) como `true` na rotina de inicialização.
 
+### 1.3 Correções e Manutenção de CI/CD (Set/2026)
+- **Node.js 20 Deprecated**: As actions principais (como `actions/checkout`) foram atualizadas para a versão `v4` no `flutter-build.yml` e `ci.yml` para evitar os alertas de depreciação do Node 20, rodando nativamente no Node 24.
+- **Falha de Compilação Flatpak**: Adicionado `apt-get update -y || apt-get update -y` e a flag `--fix-missing` no build do flatpak dentro do `flutter-build.yml` para evitar erros `404 Not Found` nos mirrors do Ubuntu.
+- **Isolamento de Releases (Sobrescrita de Binários)**: Para evitar que a build da `cmtech` sobrescrevesse a build da `cmclientes` no GitHub Releases, a tag de upload padrão das actions (`flutter-nightly.yml` e `flutter-build.yml`) foi alterada para refletir a branch específica (ex: `nightly-cmtech` e `nightly-cmclientes`).
+- **Avisos MSVC C++**: Corrigido um alerta de *truncation* em `res/msi/CustomActions/CustomActions.cpp`, garantindo o cast seguro de `HINSTANCE` para `INT_PTR` nas chamadas 64-bits.
+
 ---
 
 ## 2. Versão do Cliente (Branch `build/cmclientes`)
