@@ -85,7 +85,10 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         ),
       Align(
         alignment: Alignment.center,
-        child: loadLogo(),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          child: Image.asset('assets_casamagalhaes/logo_cliente.png', width: 150),
+        ),
       ),
       buildTip(context),
       if (!isOutgoingOnly) buildIDBoard(context),
@@ -140,7 +143,19 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                     children: children,
                   ),
                 ),
-                Expanded(child: Container())
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Este software atende aos requisitos da LGPD.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
             if (isOutgoingOnly)
@@ -602,14 +617,9 @@ class _DesktopHomePageState extends State<DesktopHomePage>
               0, marginTop, 0, bind.isIncomingOnly() ? marginTop : 0),
           child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  Color.fromARGB(255, 226, 66, 188),
-                  Color.fromARGB(255, 244, 114, 124),
-                ],
-              )),
+                  color: const Color(0xFF002244),
+                  borderRadius: BorderRadius.circular(10),
+              ),
               padding: EdgeInsets.all(20),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -629,7 +639,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                       <Widget>[
                         if (content.isNotEmpty)
                           Text(
-                            translate(content),
+                            btnText == 'Install' ? "Instale o serviço da Casa Magalhães para acesso não supervisionado." : translate(content),
                             style: TextStyle(
                                 height: 1.5,
                                 color: Colors.white,
@@ -645,10 +655,11 @@ class _DesktopHomePageState extends State<DesktopHomePage>
                                     FixedWidthButton(
                                       width: 150,
                                       padding: 8,
-                                      isOutline: true,
+                                      isOutline: false,
+                                      bgColor: btnText == 'Install' ? const Color(0xFF00E600) : Colors.transparent,
                                       text: translate(btnText),
-                                      textColor: Colors.white,
-                                      borderColor: Colors.white,
+                                      textColor: btnText == 'Install' ? Colors.blue : Colors.white,
+                                      borderColor: btnText == 'Install' ? Colors.transparent : Colors.white,
                                       textSize: 20,
                                       radius: 10,
                                       onTap: onPressed,

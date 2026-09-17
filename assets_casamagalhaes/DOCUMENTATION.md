@@ -30,6 +30,13 @@ Esta branch isola as configurações feitas especificamente para o cliente final
 - **Mobile (`flutter/lib/mobile/pages/home_page.dart`)**: A guia de conexão para outras máquinas (`ConnectionPage`) foi removida das abas.
 - **Branding**: O aplicativo teve seu `app_name` alterado para `CMCLIENTES` no manifesto do Android (`AndroidManifest.xml`), no Windows (`Runner.rc` e `main.cpp`) e no Linux (`rustdesk.desktop`). Os ícones oficiais foram substituídos por `icon_cliente.ico` e `icon_cliente.png`.
 
+### 2.1 Ambiente de Homologação (Branch `build/cmclientes-homolog`)
+- Nova branch originada a partir de `build/cmclientes` criada para implementar Layout Corporativo LGPD.
+- **Tamanho Fixo**: Definido `MinimumSize` e tamanho inicial para `400x650` (`flutter/lib/main.dart`).
+- **Menu Enxuto**: Abas do painel lateral de configuração restritas apenas a 'Geral' e 'Sobre' (`flutter/lib/desktop/pages/desktop_setting_page.dart`).
+- **Branding Premium**: Renderização da logo customizada (`assets_casamagalhaes/logo_cliente.png`) no topo do painel principal e adição do banner UAC com as cores corporativas (Azul Marinho e botão Verde Claro).
+- **Rodapé LGPD**: Termo de adesão a requisitos da LGPD exibido no rodapé do painel esquerdo da página principal (`flutter/lib/desktop/pages/desktop_home_page.dart`).
+
 ---
 
 ## 3. Versão do Técnico (Branch `build/cmtech`)
@@ -42,6 +49,7 @@ Esta branch é voltada para a equipe de suporte.
 - **Mobile (`flutter/lib/mobile/pages/home_page.dart`)**: A guia de identificação do servidor (`ServerPage`) foi desativada e ocultada.
 - **Branding**: O aplicativo teve seu `app_name` alterado para `CMTECH` (Android, Windows, Linux) e os ícones foram substituídos por `icon_tech.ico` e `icon_tech.png`.
 - **Validação Zero-Trust (`flutter/lib/common.dart`)**: Adicionada uma verificação no escopo inicial da função `connect()`. A função agora checa `!gFFI.userModel.isLogin`. Se o técnico não estiver autenticado/logado corretamente na instância (servidor Oauth/API da Casa Magalhães), a conexão aborta e exibe uma mensagem nativa exigindo autenticação.
+- **Blindagem de Rede Zero-Trust (`src/hbbs_http/sync.rs`)**: Bloqueio ativo no back-end em Rust das opções de rede vindas via OIDC/Strategy para prevenir sobrescrita das chaves configuradas em `--dart-define` pelo payload em branco da API de login.
 
 ## Dicas para Próximas Atualizações (IAs ou Humanos)
 
