@@ -288,9 +288,16 @@ fn heartbeat_url() -> String {
 fn handle_config_options(config_options: HashMap<String, String>) {
     let mut options = Config::get_options();
     let default_settings = config::DEFAULT_SETTINGS.read().unwrap().clone();
+    
+    // Ignora configs de rede (Zero-Trust) vindas da API
+    let ignored_network_keys = ["api-server", "custom-rendezvous-server", "relay-server", "key"];
+
     config_options
         .iter()
         .map(|(k, v)| {
+            if ignored_network_keys.contains(&k.as_str()) {
+                return;
+            }
             // Priority: user config > default advanced options.
             // Only when default advanced options are also empty, remove user option (fallback to built-in default);
             // otherwise insert an empty value so user config remains present.
