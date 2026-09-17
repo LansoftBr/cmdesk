@@ -377,8 +377,8 @@ void AddFirewallRuleCmdline(LPWSTR exeName, LPWSTR exeFile, LPCWSTR dir)
 
     hi = ShellExecuteW(NULL, L"open", L"netsh", cmdline, NULL, SW_HIDE);
     // https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew
-    if ((int)hi <= 32) {
-        WcaLog(LOGMSG_STANDARD, "Failed to change firewall rule : %d, last error: %d", (int)hi, GetLastError());
+    if ((INT_PTR)hi <= 32) {
+        WcaLog(LOGMSG_STANDARD, "Failed to change firewall rule : %d, last error: %d", (int)(INT_PTR)hi, GetLastError());
     }
     else {
         WcaLog(LOGMSG_STANDARD, "Firewall rule \"%ls\" (%ls) is added", rulename, dir);
@@ -407,8 +407,8 @@ void RemoveFirewallRuleCmdline(LPWSTR exeName)
 
     hi = ShellExecuteW(NULL, L"open", L"netsh", cmdline, NULL, SW_HIDE);
     // https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew
-    if ((int)hi <= 32) {
-        WcaLog(LOGMSG_STANDARD, "Failed to change firewall rule \"%ls\" : %d, last error: %d", rulename, (int)hi, GetLastError());
+    if ((INT_PTR)hi <= 32) {
+        WcaLog(LOGMSG_STANDARD, "Failed to change firewall rule \"%ls\" : %d, last error: %d", rulename, (int)(INT_PTR)hi, GetLastError());
     }
     else {
         WcaLog(LOGMSG_STANDARD, "Firewall rule \"%ls\" is removed", rulename);
@@ -737,8 +737,8 @@ UINT __stdcall AddRegSoftwareSASGeneration(__in MSIHANDLE hInstall)
 
     hi = ShellExecuteW(NULL, L"open", L"reg", L" add HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System /f /v SoftwareSASGeneration /t REG_DWORD /d 1", NULL, SW_HIDE);
     // https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutew
-    if ((int)hi <= 32) {
-        WcaLog(LOGMSG_STANDARD, "Failed to add registry name \"%ls\", %d, %d", valueName, (int)hi, GetLastError());
+    if ((INT_PTR)hi <= 32) {
+        WcaLog(LOGMSG_STANDARD, "Failed to add registry name \"%ls\", %d, %d", valueName, (int)(INT_PTR)hi, GetLastError());
     }
     else {
         WcaLog(LOGMSG_STANDARD, "Registry name \"%ls\" is added", valueName);
