@@ -422,7 +422,8 @@ WindowOptions getHiddenTitleBarWindowOptions(
     defaultTitleBarStyle = TitleBarStyle.normal;
   }
   return WindowOptions(
-    size: size,
+    size: isMainWindow ? const Size(420, 650) : size,
+    minimumSize: isMainWindow ? const Size(420, 650) : null,
     center: center,
     backgroundColor: (isMacOS && isMainWindow) ? null : Colors.transparent,
     skipTaskbar: false,

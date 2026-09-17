@@ -179,7 +179,15 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   buildRightPane(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: ConnectionPage(),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Image.asset('assets_casamagalhaes/logo_cliente.png', width: 200),
+          ),
+          Expanded(child: ConnectionPage()),
+        ],
+      ),
     );
   }
 

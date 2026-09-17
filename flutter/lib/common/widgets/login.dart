@@ -888,47 +888,8 @@ Future<bool?> _openLoginDialog() async {
             );
           }
           return Offstage(
-            offstage: loginOptions.isEmpty,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 8.0,
-                ),
-                Center(
-                    child: Text(
-                  translate('or'),
-                  style: TextStyle(fontSize: 16),
-                )),
-                const SizedBox(
-                  height: 8.0,
-                ),
-                LoginWidgetOP(
-                  ops: loginOptions
-                      .map((e) => ConfigOP(op: e['name'], icon: e['icon']))
-                      .toList(),
-                  curOP: curOP,
-                  startAuth: oidcAuth.start,
-                  cancelAuth: oidcAuth.cancelCurrent,
-                  canStartAuth: oidcAuth.canStart,
-                  cbLogin: (Map<String, dynamic> authBody) async {
-                    LoginResponse? resp;
-                    try {
-                      // access_token is already stored in the rust side.
-                      resp =
-                          gFFI.userModel.getLoginResponseFromAuthBody(authBody);
-                    } catch (e) {
-                      debugPrint(
-                          'Failed to parse oidc login body: "$authBody"');
-                    }
-                    close(true);
-
-                    if (resp != null) {
-                      handleLoginResponse(resp, false, null);
-                    }
-                  },
-                ),
-              ],
-            ),
+            offstage: true,
+            child: SizedBox(),
           );
         });
 

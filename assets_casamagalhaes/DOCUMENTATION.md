@@ -49,6 +49,14 @@ Esta branch é voltada para a equipe de suporte.
 - **Branding**: O aplicativo teve seu `app_name` alterado para `CMTECH` (Android, Windows, Linux) e os ícones foram substituídos por `icon_tech.ico` e `icon_tech.png`.
 - **Validação Zero-Trust (`flutter/lib/common.dart`)**: Adicionada uma verificação no escopo inicial da função `connect()`. A função agora checa `!gFFI.userModel.isLogin`. Se o técnico não estiver autenticado/logado corretamente na instância (servidor Oauth/API da Casa Magalhães), a conexão aborta e exibe uma mensagem nativa exigindo autenticação.
 
+### 3.1 Ambiente de Homologação (Branch `build/cmtech-homolog`)
+Nova branch originada a partir de `build/cmtech` para aplicar identidade White-label.
+- **Tema Global**: Substituição das cores primárias por Azul Marinho (`Color(0xFF002244)`) e secundárias/botões por Verde Claro (`Color(0xFF00E600)`) em `flutter/lib/common.dart`, afetando toda a aplicação.
+- **Janela Compacta**: Fixado o `MinimumSize` e tamanho inicial para `420x650` em `flutter/lib/main.dart` para tornar a experiência focada.
+- **Branding da Home**: Adicionado `Image.asset('assets_casamagalhaes/logo_cliente.png')` ao topo do painel principal (direito).
+- **Limpeza do Webauth**: Removido o botão "Continuar com" (OIDC) e o separador "OU" em `flutter/lib/common/widgets/login.dart`. O foco é exclusivamente no login via email/senha.
+- **Aba Sobre Customizada**: O copyright original foi substituído pela assinatura da Casa Magalhães com link pro site oficial (`casamagalhaes.com.br`) usando um card na cor da empresa em `flutter/lib/desktop/pages/desktop_setting_page.dart`.
+
 ## Dicas para Próximas Atualizações (IAs ou Humanos)
 
 - **Mudança de Versão do RustDesk**: Ao dar "merge" no upstream do repositório oficial do RustDesk, sempre atente-se às mudanças de UI (`home_page.dart` e `desktop_home_page.dart`). O Flutter sofre refatorações constantes pelos criadores originais do RustDesk, o que pode quebrar a injeção do `--dart-define` ou as remoções da aba.
