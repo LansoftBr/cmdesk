@@ -636,7 +636,7 @@ class _DesktopTabState extends State<DesktopTab>
                       child: Row(children: [
                         Offstage(
                           offstage: !showLogo,
-                          child: loadIcon(16),
+                          child: Image.asset('assets_casamagalhaes/icon_cliente.png', width: 16),
                         ),
                         Offstage(
                             offstage: !showTitle,
