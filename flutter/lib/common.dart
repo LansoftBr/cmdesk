@@ -2579,7 +2579,9 @@ connect(BuildContext context, String id,
     String? password,
     String? connToken,
     bool? isSharedPassword}) async {
-  if (!gFFI.userModel.isLogin) {
+  // Remote-session windows run in their own Flutter engine where gFFI.userModel
+  // is never populated; the persisted access_token is shared by all windows.
+  if (bind.mainGetLocalOption(key: 'access_token').isEmpty) {
       showToast("Acesso negado. Faça login no servidor da Casa Magalhães.");
       return;
   }
