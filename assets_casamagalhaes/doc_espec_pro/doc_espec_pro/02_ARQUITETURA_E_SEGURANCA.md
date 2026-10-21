@@ -32,6 +32,14 @@ Em `flutter/lib/common.dart` (método `setServerConfig`), a arquitetura impõe a
 ### 2.2. Trava Arquitetural na Camada Rust (Opcional, porém Fortemente Recomendado)
 Em `src/hbbs_http/sync.rs`, o parseador HTTP que desserializa configurações avançadas do servidor deve ter os blocos que populam a rede da estrutura de options permanentemente inativados ou envoltos em macros de compilação condicionais de segurança.
 
+## 2.3. Gate de Login do Técnico e Arquitetura Multi-Janela
+
+O CMTECH bloqueia qualquer conexão sem login (função `connect()` em `flutter/lib/common.dart`). Ponto de arquitetura crítico:
+
+- No desktop, o RustDesk abre cada sessão remota (controle, arquivos, terminal…) em **janelas com engine Flutter próprio** (`rustDeskWinManager`). Estados em memória como `gFFI.userModel` existem **apenas na janela principal**.
+- Por isso, o gate deve consultar o estado persistido no core Rust — `bind.mainGetLocalOption(key: 'access_token')` — que é compartilhado por todas as janelas. Usar `gFFI.userModel.isLogin` quebra as ferramentas abertas pela toolbar da sessão (bug "Acesso negado. Faça login..." ao abrir Transferir arquivo).
+- O host (CMCLIENTES) não participa dessa checagem: a autorização de arquivos no host é feita pelo Rust (`file_transfer_enabled()` em `src/server/connection.rs`) com base nas permissões da sessão.
+
 ## 3. Gestão de Build, CI/CD e Secrets
 
 Devido a problemas de quebra de *strings* Base64 em pipelines GitHub Actions, a arquitetura exige injeção determinística de parâmetros:

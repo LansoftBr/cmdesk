@@ -30,6 +30,8 @@ O CMDesk é uma customização (White-label) do RustDesk, projetada para fornece
 - **RF-T02:** Tema global (ThemeData) injetado com cores `0xFF002244` (Azul Marinho) e `0xFF00E600` (Verde Claro).
 - **RF-T03:** O componente de Login não deve exibir o botão de OIDC/Webauth (mantendo apenas usuário e senha locais/proprietários).
 - **RF-T04:** A aba de 'Sobre/About' deve ser purgada de referências a terceiros e conter os Copyrights exclusivos da Casa Magalhães.
+- **RF-T05:** O técnico só pode iniciar conexões (controle, transferência de arquivos, terminal, câmera, túnel TCP) se estiver logado no servidor da Casa Magalhães. A verificação deve funcionar em **todas** as janelas do app (principal e janelas de sessão remota), usando o `access_token` persistido.
+- **RF-C05 (contrapartida no cliente):** O CMCLIENTES (host) **não** exige login local para aceitar transferência de arquivos; a autorização depende apenas das permissões da sessão remota.
 
 ### 3.3. Requisitos Não-Funcionais (RNF)
 - **RNF-01 (Infraestrutura):** O ecossistema depende de uma API de controle de usuários e um conjunto HBBS/HBBR. A injeção de parâmetros na compilação deve ocorrer via `--dart-define` de modo seguro, lidando estritamente com strings Base64.

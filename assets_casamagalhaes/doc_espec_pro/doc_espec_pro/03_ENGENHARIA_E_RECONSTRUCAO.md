@@ -70,7 +70,19 @@ Estando na branch do técnico (`build/cmtech-homolog`):
 2. **Tema Global:** Em `flutter/lib/common.dart`, localize a variável `MyTheme` (ou a instância de `ThemeData`) e sobrescreva os hexadecimais principais para `0xFF002244` (Azul Marinho) e a tipografia de destaque para `0xFF00E600` (Verde Claro).
 3. **Restrição de Login Webauth:** Em `flutter/lib/common/widgets/login.dart`, procure o componente visual e exclua a renderização do botão "Logar com OIDC / Webauth", forçando o técnico a usar apenas a caixa de texto direta com a API autenticada local.
 4. **Copyright (Sobre):** Em `flutter/lib/desktop/pages/desktop_setting_page.dart`, procure pela aba 'Sobre'. Modifique o copyright, remover a versão de checagem online e os textos open source padronizados que conflitem com a apresentação do software da Casa Magalhães.
-5. Commit das alterações.
+5. **Gate de Login do Técnico (obrigatório):** Em `flutter/lib/common.dart`, no início da função `connect(BuildContext context, String id, {...})`, adicione o bloqueio que impede conexões sem login no servidor da Casa Magalhães:
+   ```dart
+   // Remote-session windows run in their own Flutter engine where gFFI.userModel
+   // is never populated; the persisted access_token is shared by all windows.
+   if (bind.mainGetLocalOption(key: 'access_token').isEmpty) {
+       showToast("Acesso negado. Faça login no servidor da Casa Magalhães.");
+       return;
+   }
+   ```
+   > ⚠️ **NÃO use `gFFI.userModel.isLogin`** nesta checagem. No desktop, cada janela de sessão remota roda em um *engine* Flutter separado, onde o `userModel` nunca é preenchido. Usar `isLogin` faz com que **Transferir arquivo**, **Terminal**, **Câmera** e **Túnel TCP** (abertos pela toolbar da sessão via `connectWithToken`) sejam bloqueados com "Acesso negado" mesmo com o técnico logado. O `access_token` é persistido no config do Rust e é visível por todas as janelas.
+   >
+   > Este gate existe **somente no CMTECH**. O CMCLIENTES (host) não possui checagem de login: a liberação de arquivos no host depende apenas das permissões da sessão (`enable-file-transfer` em `src/server/connection.rs`).
+6. Commit das alterações.
 
 ## 3. Diretrizes de Compilação CI/CD
 Tanto para gerar o artefato do CMCLIENTES quanto do CMTECH, certifique-se de invocar o runner passando o comando Dart correto com as devidas aspas:
